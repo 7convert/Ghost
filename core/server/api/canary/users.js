@@ -69,6 +69,30 @@ module.exports = {
         }
     },
 
+    add: {
+        statusCode: 201,
+        headers: {
+            cacheInvalidate: true
+        },
+        options: [
+            'include'
+        ],
+        validation: {
+            options: {
+                include: {
+                    values: ALLOWED_INCLUDES
+                }
+            }
+        },
+        permissions: true,
+        query(frame) {
+            return models.User.add(frame.data.users[0], frame.options)
+                .then(function(model) {
+                    return model;
+                });
+        }
+    },
+
     edit: {
         headers: {},
         options: [
